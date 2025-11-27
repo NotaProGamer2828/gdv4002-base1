@@ -47,6 +47,7 @@ using namespace CoreStructures;
 // Top level engine functionality - setup, main loop and shutdown
 //
 
+
 int engineInit(const char* windowTitle, int initWidth, int initHeight, float initViewplaneWidth) {
 
 	// Initialise glfw and setup window
@@ -103,6 +104,9 @@ int engineInit(const char* windowTitle, int initWidth, int initHeight, float ini
 }
 
 
+
+
+
 void engineMainLoop() {
 
 	// Loop while program is not terminated.
@@ -131,6 +135,7 @@ void engineMainLoop() {
 		char timingString[256];
 		sprintf_s(timingString, 256, "%s: Average fps: %.0f; Average spf: %f", windowTitleString.c_str(), gameClock->averageFPS(), gameClock->averageSPF() / 1000.0f);
 		glfwSetWindowTitle(window, timingString);
+		
 	}
 }
 
