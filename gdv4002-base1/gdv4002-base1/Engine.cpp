@@ -48,7 +48,8 @@ using namespace CoreStructures;
 //
 
 
-int engineInit(const char* windowTitle, int initWidth, int initHeight, float initViewplaneWidth) {
+int engineInit(const char* windowTitle, int initWidth, int initHeight, float initViewplaneWidth) 
+{
 
 	// Initialise glfw and setup window
 	glfwInit();
@@ -416,38 +417,45 @@ int deleteMatchingObjects(const char* key) {
 }
 
 
-void showAxisLines() {
+void showAxisLines() 
+{
 
 	_showAxisLines = true;
 }
 
-void hideAxisLines() {
+void hideAxisLines() 
+{
 
 	_showAxisLines = false;
 }
 
-bool axisLinesVisible() {
+bool axisLinesVisible() 
+{
 
 	return _showAxisLines;
 }
 
-void setBackgroundColour(glm::vec4& newColour) {
+void setBackgroundColour(glm::vec4& newColour) 
+{
 
 	backgroundColour = newColour;
 }
 
-void setViewplaneWidth(float newWidth) {
+void setViewplaneWidth(float newWidth) 
+{
 
 	viewplaneSize.x = newWidth;
 	viewplaneSize.y = viewplaneSize.x * viewplaneAspect;
 }
 
-float getViewplaneWidth() {
+float getViewplaneWidth() 
+{
 
 	return viewplaneSize.x;
 }
 
-float getViewplaneHeight() {
+float getViewplaneHeight() 
+{
 
 	return viewplaneSize.y;
 }
@@ -475,7 +483,8 @@ void defaultRenderScene()
 	glLoadIdentity();
 
 	// Render axis lines if flag set
-	if (_showAxisLines) {
+	if (_showAxisLines) 
+	{
 
 		glColor3f(0.5f, 0.5f, 0.5f);
 
@@ -491,11 +500,13 @@ void defaultRenderScene()
 	}
 
 	// call render override if set...
-	if (overrideRenderFn != nullptr) {
+	if (overrideRenderFn != nullptr) 
+	{
 
 		overrideRenderFn(window);
 	}
-	else {
+	else 
+	{
 
 		// ...if not set render default scene
 
@@ -511,9 +522,11 @@ void defaultRenderScene()
 }
 
 // Function called to update game objects in the scene
-void defaultUpdateScene(double tDelta) {
+void defaultUpdateScene(double tDelta) 
+{
 
-	for (auto iter = gameObjects.begin(); iter != gameObjects.end(); iter++) {
+	for (auto iter = gameObjects.begin(); iter != gameObjects.end(); iter++) 
+	{
 
 		iter->second->update(tDelta);
 	}
@@ -534,7 +547,8 @@ void defaultResizeWindow(GLFWwindow* window, int width, int height)
 void defaultKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	// Check if a key is pressed
-	if (action == GLFW_PRESS) {
+	if (action == GLFW_PRESS) 
+	{
 
 		// check which key was pressed...
 		switch (key)
@@ -550,7 +564,8 @@ void defaultKeyboardHandler(GLFWwindow* window, int key, int scancode, int actio
 		}
 	}
 	// If not check a key has been released
-	else if (action == GLFW_RELEASE) {
+	else if (action == GLFW_RELEASE) 
+	{
 
 		// handle key release events
 	}
@@ -561,10 +576,12 @@ void defaultKeyboardHandler(GLFWwindow* window, int key, int scancode, int actio
 
 #pragma region Test functions
 
-void listObjectCounts() {
+void listObjectCounts()
+{
 
 	printf("\nObject key counts...\n");
-	for (auto iter = objectCount.begin(); iter != objectCount.end(); iter++) {
+	for (auto iter = objectCount.begin(); iter != objectCount.end(); iter++) 
+	{
 
 		printf("%s has count %d\n", iter->first.c_str(), iter->second);
 	}
@@ -573,7 +590,8 @@ void listObjectCounts() {
 void listGameObjectKeys() {
 
 	printf("\nIn-Game object keys...\n");
-	for (auto iter = gameObjects.begin(); iter != gameObjects.end(); iter++) {
+	for (auto iter = gameObjects.begin(); iter != gameObjects.end(); iter++)
+	{
 
 		printf("%s\n", iter->first.c_str());
 	}
