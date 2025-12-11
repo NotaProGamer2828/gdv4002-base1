@@ -72,17 +72,6 @@ void myUpdate(GLFWwindow* window, double tDelta) {
 
     GameObject2D* player = getObject("player1");
 
-    //Wraps game to make player stay witin the screen
-    if (player->position.y > getViewplaneHeight() / 2.0f)
-        player->position.y = -getViewplaneHeight() / 2.0f;
-    if (player->position.y < -getViewplaneHeight() / 2.0f)
-        player->position.y = getViewplaneHeight() / 2.0f;
-
-    if (player->position.x > getViewplaneHeight() / 2.0f)
-        player->position.x = -getViewplaneHeight() / 2.0f;
-    if (player->position.x < -getViewplaneHeight() / 2.0f)
-        player->position.x = getViewplaneHeight() / 2.0f;
-
 	//Astroid collection
 	GameObjectCollection astroid = getObjectCollection("astroid");
 

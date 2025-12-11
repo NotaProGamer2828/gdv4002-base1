@@ -13,59 +13,72 @@ Player::Player(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize
     velocity = glm::vec2(0.0f, 0.0f); // default to 0 velocity
 }
 
+float temp = 0.0f;
+float maxSpeed = 0.05f;
+
 void Player::update(double tDelta) 
 {
-    glm::vec2 F = glm::vec2(0.0f, 0.0f);
-    const float thrust = 1.0f;
+    glm::vec2 F;
+    const float thrust = 0.03f;
+    //cyrrnt speed
 
     // 1. accumulate forces
     if (keys.test(Key::W) == true) 
     {
-        F += glm::vec2(0.0f, thrust);
+        temp += thrust;
     }
     if (keys.test(Key::S) == true) 
     {
-        F += glm::vec2(0.0f, -thrust);
+        temp -= thrust;
     }
     if (keys.test(Key::A) == true) 
     {
-        F += glm::vec2(-thrust, 0.0f);
+        orientation += glm::radians(180.0f) * tDelta;
     }
     if (keys.test(Key::D) == true) 
     {
-        F += glm::vec2(thrust, 0.0f);
+        orientation -= glm::radians(180.0f) * tDelta;
     }
     
+    F = glm::vec2(temp * cos(orientation) * (float)tDelta, temp * sin(orientation) * (float)tDelta);
+
     F += gravity;
     
+    // Checl if F is larger than max speed
+    if (glm::length(F) > maxSpeed)
+    {
+        // Get the direction direction vector of the force
+        F = glm::normalize(F);
+
+        // Scale that direction to our max speed
+        F *= maxSpeed;
+    }
+
+
     // add impulse force
-    if (position.y < -getViewplaneHeight() / 2.0f) {
-
-        F += glm::vec2(0.0f, 20.0f);
+    if (position.y < -getViewplaneHeight() / 2.0f) 
+    {
+        position.y = getViewplaneHeight() / 2.0f;
     }
 
-    else if (position.y < -getViewplaneHeight() / 2.0f) {
-
-        F += glm::vec2(0.0f, 20.0f);
+    else if (position.y > getViewplaneHeight() / 2.0f) 
+    {
+        position.y = -getViewplaneHeight() / 2.0f;
     }
 
-    (position.y < -getViewplaneHeight() / 2.0f) {
-
-        F += glm::vec2(0.0f, 20.0f);
+    if (position.x < -getViewplaneHeight() / 2.0f)
+    {
+        position.x = getViewplaneHeight() / 2.0f;
     }
 
-    (position.y < -getViewplaneHeight() / 2.0f) {
-
-        F += glm::vec2(0.0f, 20.0f);
+    else if (position.x > getViewplaneHeight() / 2.0f)
+    {
+        position.x = -getViewplaneHeight() / 2.0f;
     }
 
-    // 2. calculate acceleration.  If f=ma, a = f/m
-    glm::vec2 a = F * (1.0f / mass);
-    // 3. integate to get new velocity
-    velocity = velocity + (a * (float)tDelta);
-    // 4. integrate to get new position
-    position = position + (velocity * (float)tDelta);
 
+    // Add that to the postion
+    position += F;
 
 }
 

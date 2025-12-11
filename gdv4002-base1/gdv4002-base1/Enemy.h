@@ -6,8 +6,8 @@
 class astroid : public GameObject2D {
 
 private:
-    float		phaseAngle; // in radians
-    float		phaseVelocity; // Angle change per second
+    float	phaseAngle; // in radians
+    float	phaseVelocity; // Angle change per second
 
 
     float RotationSpeed = glm::radians(300.0f); // Rotation speed per second 
