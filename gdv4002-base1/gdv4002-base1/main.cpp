@@ -38,7 +38,7 @@ int main(void) {
 
     // Random number setup
     std::mt19937 gen;
-    std::uniform_real_distribution<float> normDist,normX,normY;
+    std::uniform_real_distribution<float> normDist,normX,normY,normScale;
 
     std::random_device rd;
     gen = std::mt19937(rd());
@@ -58,9 +58,10 @@ int main(void) {
     float astroidPX = normX(gen);
     float astroidPY = normY(gen);
     float astroidX = normDist(gen);
-    float asteroidY = normDist(gen);
+    float astroidY = normDist(gen);
+
     
-    astroid* astroid1 = new astroid(glm::vec2(astroidPX, astroidPY), 0.0f, glm::vec2(0.75f, 0.75f), asteroidTexture, glm::vec2(astroidX, asteroidY));
+    astroid* astroid1 = new astroid(glm::vec2(astroidPX, astroidPY), 0.0f, glm::vec2(0.75f, 0.75f), asteroidTexture, glm::vec2(astroidX, astroidY));
     addObject("astroid", astroid1);
 
 	//setup game sceen object here
@@ -109,7 +110,7 @@ void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, in
 			printf("d Pressed\n");
 			break;
         case GLFW_KEY_SPACE:
-            keys[Key::D] = true;
+            keys[Key::SPACE] = true;
             printf("SPACE Pressed\n");
             break;
 		}
@@ -136,7 +137,7 @@ void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, in
 			printf("d Released\n");
 			break;
         case GLFW_KEY_SPACE:
-            keys[Key::D] = false;
+            keys[Key::SPACE] = false;
             printf("SPACE Released\n");
             break;
         }

@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Bullet.h"
 #include "Keys.h"
 #include <bitset>
 #include "Engine.h"
@@ -39,9 +40,17 @@ void Player::update(double tDelta)
     {
         orientation -= glm::radians(180.0f) * tDelta;
     }
-
-  
     
+    //Bulet input
+    if (keys.test(Key::SPACE) == true)
+    {
+        GLuint bulletTexture = loadTexture("Resources\\Textures\\Bullet.png", TextureProperties::NearestFilterTexture());
+//first vec2 below needs to have player position 
+        Bullet* bulletShot = new Bullet(glm::vec2(1.0f, 1.0f), 0.0f, glm::vec2(0.5f, 0.5f), bulletTexture, glm::vec2(cosf(orientation), sinf(orientation)));
+        addObject("Bullet", bulletShot);
+    }
+
+
     F = glm::vec2(temp * cos(orientation) * (float)tDelta, temp * sin(orientation) * (float)tDelta);
 
     // blank for now
