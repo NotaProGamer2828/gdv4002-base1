@@ -1,8 +1,10 @@
 #include "Engine.h"
 #include "Keys.h"
 #include <bitset>
+#include <random>
 #include "Player.h"  
 #include "Enemy.h"
+
 
 // Global varaiable
 const float pi = 3.142f;
@@ -29,6 +31,21 @@ int main(void) {
 		return initResult; // exit if setup failed
 	}
 
+    // Setup rendering properties (enable blending)
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDepthFunc(GL_ALWAYS);
+
+    // Random number setup
+    std::mt19937 gen;
+    std::uniform_real_distribution<float> normDist,normX,normY;
+
+    std::random_device rd;
+    gen = std::mt19937(rd());
+    normDist = std::uniform_real_distribution<float>(-1.0f, 1.0f);
+    normX = std::uniform_real_distribution<float>(-getViewplaneWidth()/2.0f, getViewplaneWidth() / 2.0f);
+    normY = std::uniform_real_distribution<float>(-getViewplaneHeight() / 2.0f, getViewplaneHeight() / 2.0f);
+
 	//Setup game scene objects here
     GLuint playerTexture = loadTexture("Resources\\Textures\\player1_ship.png",TextureProperties::NearestFilterTexture());
     Player* mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 1.0f);
@@ -37,21 +54,24 @@ int main(void) {
     addObject("bullet", glm::vec2(1.0f, 1.0f), 0.0f, glm::vec2(0.5f, 0.5f), "Resources\\Textures\\Bullet.png", TextureProperties::NearestFilterTexture());
 
     GLuint asteroidTexture = loadTexture("Resources\\Textures\\Astroid.png", TextureProperties::NearestFilterTexture());
-    astroid* astroid1 = new astroid(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.75f, 0.75f), asteroidTexture, 0.0f, glm::radians(90.0f));
+    
+    float astroidPX = normX(gen);
+    float astroidPY = normY(gen);
+    float astroidX = normDist(gen);
+    float asteroidY = normDist(gen);
+    
+    astroid* astroid1 = new astroid(glm::vec2(astroidPX, astroidPY), 0.0f, glm::vec2(0.75f, 0.75f), asteroidTexture, glm::vec2(astroidX, asteroidY));
     addObject("astroid", astroid1);
-    astroid* astroid2 = new astroid(glm::vec2(1.0f, 0.0f), 0.0f, glm::vec2(0.75f, 0.75f), asteroidTexture, 0.0f, glm::radians(90.0f));
-    addObject("astroid", astroid2);
-    astroid* astroid3 = new astroid(glm::vec2(2.0f, 0.0f), 0.0f, glm::vec2(0.75f, 0.75f), asteroidTexture, 0.0f, glm::radians(90.0f));
-    addObject("astroid", astroid3);
 
-	addObject("alien", glm::vec2(0.0f, 0.0f), glm::radians(0.0f), glm::vec2(0.50f, 0.50f), "Resources\\Textures\\Alien.png", TextureProperties::NearestFilterTexture());
-	
 	//setup game sceen object here
 	setKeyboardHandler(myKeyboardHandler);
 
 	// Outputs name and amount of objects (Useful for performance check)
 	listGameObjectKeys();
 	listObjectCounts();
+
+    // hides axis lines on screen
+    hideAxisLines();
 
 	//Enter main loop - this handles update and render calls
 	engineMainLoop();
@@ -63,28 +83,12 @@ int main(void) {
 	return 0;
 }
 
-//Astoid movement
-float astroidPhase[3] = { 0.0f, 0.0f, 0.0f };
-float astroidPhaseVelocity[3] = { glm::radians(90.0f),  glm::radians(90.0f), glm::radians(90.0f) };
-
-//Calls myUpdate function
-void myUpdate(GLFWwindow* window, double tDelta) {
-
-    GameObject2D* player = getObject("player1");
-
-	//Astroid collection
-	GameObjectCollection astroid = getObjectCollection("astroid");
-
-	for (int i = 0; i < astroid.objectCount; i++) {
-		astroid.objectArray[i]->position.y = sinf(astroidPhase[i]); // assume phase stored in radians so no conversion needed
-		astroidPhase[i] += astroidPhaseVelocity[i] * tDelta;
-	}
-}
-
+//keyboard Input Repsonce
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	//Check if the key was just pressed
-	if (action == GLFW_PRESS) {
+	if (action == GLFW_PRESS) 
+    {
 	//Now check which key was pressed...
 		switch (key)
 		{
@@ -104,9 +108,14 @@ void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, in
 			keys[Key::D] = true;
 			printf("d Pressed\n");
 			break;
+        case GLFW_KEY_SPACE:
+            keys[Key::D] = true;
+            printf("SPACE Pressed\n");
+            break;
 		}
 	}
-    if (action == GLFW_RELEASE) {
+    if (action == GLFW_RELEASE) 
+    {
         //Handle key release events
         switch (key)
         {
@@ -126,6 +135,10 @@ void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, in
 			keys[Key::D] = false;
 			printf("d Released\n");
 			break;
+        case GLFW_KEY_SPACE:
+            keys[Key::D] = false;
+            printf("SPACE Released\n");
+            break;
         }
     }
 }

@@ -20,9 +20,9 @@ void Player::update(double tDelta)
 {
     glm::vec2 F;
     const float thrust = 0.03f;
-    //cyrrnt speed
+    //current speed
 
-    // 1. accumulate forces
+    //accumulate forces
     if (keys.test(Key::W) == true) 
     {
         temp += thrust;
@@ -39,12 +39,15 @@ void Player::update(double tDelta)
     {
         orientation -= glm::radians(180.0f) * tDelta;
     }
+
+  
     
     F = glm::vec2(temp * cos(orientation) * (float)tDelta, temp * sin(orientation) * (float)tDelta);
 
+    // blank for now
     F += gravity;
     
-    // Checl if F is larger than max speed
+    // Checks if F is larger than max speed
     if (glm::length(F) > maxSpeed)
     {
         // Get the direction direction vector of the force
@@ -55,7 +58,7 @@ void Player::update(double tDelta)
     }
 
 
-    // add impulse force
+    // Add Wrap so that Player stays within window
     if (position.y < -getViewplaneHeight() / 2.0f) 
     {
         position.y = getViewplaneHeight() / 2.0f;
@@ -75,7 +78,6 @@ void Player::update(double tDelta)
     {
         position.x = -getViewplaneHeight() / 2.0f;
     }
-
 
     // Add that to the postion
     position += F;

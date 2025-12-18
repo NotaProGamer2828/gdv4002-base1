@@ -6,15 +6,14 @@
 class astroid : public GameObject2D {
 
 private:
-    float	phaseAngle; // in radians
-    float	phaseVelocity; // Angle change per second
-
-
+    
     float RotationSpeed = glm::radians(300.0f); // Rotation speed per second 
+
+    glm::vec2 Direction;
 
 
 public:
-    astroid(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize, GLuint initTextureID, float initialPhase, float initialPhaseVelocity);
+    astroid(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize, GLuint initTextureID, glm::vec2 initDirection);
 
     void update(double tDelta) override;
 };

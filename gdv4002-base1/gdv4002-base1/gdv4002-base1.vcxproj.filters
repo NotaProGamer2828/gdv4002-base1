@@ -48,9 +48,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Stars.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Emitter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,9 +81,6 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Stars.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="Emitter.h">
