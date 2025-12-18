@@ -51,6 +51,9 @@
     <ClCompile Include="Emitter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -84,6 +87,9 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="Emitter.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
