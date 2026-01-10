@@ -3,7 +3,7 @@
 #include "GameObject2D.h"
 #include <glm/glm.hpp>
 
-class astroid : public GameObject2D {
+class Asteroid : public GameObject2D {
 
 private:
     
@@ -13,7 +13,7 @@ private:
 
 
 public:
-    astroid(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize, GLuint initTextureID, glm::vec2 initDirection);
+    Asteroid(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize, GLuint initTextureID, glm::vec2 initDirection);
 
     void update(double tDelta) override;
 };

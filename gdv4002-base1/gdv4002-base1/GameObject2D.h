@@ -3,11 +3,12 @@
 #include "GraphicsCore.h"
 #include <glm/glm.hpp>
 
-class GameObject2D {
+class GameObject2D 
+{
 
 public:
 
-	glm::vec2		position = glm::vec2(0.0f, 0.0f);
+	glm::vec2 position = glm::vec2(0.0f, 0.0f);
 
 	// angle of rotation in radians
 	float			orientation = 0.0f; 
@@ -23,4 +24,6 @@ public:
 
 	virtual void render();
 	virtual void update(double tDelta);
+
+    bool pendingDelete = false; // needed for deleting bullet
 };

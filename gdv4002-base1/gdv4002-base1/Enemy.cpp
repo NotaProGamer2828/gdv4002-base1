@@ -2,45 +2,30 @@
 #include "Enemy.h"
 #include "Engine.h"
 
-astroid::astroid(
-    glm::vec2 initPosition,
-    float initOrientation,
-    glm::vec2 initSize,
-    GLuint initTextureID,
-    glm::vec2 initDirection)
-    : GameObject2D(initPosition, initOrientation, initSize, initTextureID) {
 
+Asteroid::Asteroid(
+    glm::vec2 initPosition,float initOrientation,glm::vec2 initSize,GLuint initTextureID,glm::vec2 initDirection): GameObject2D(initPosition, initOrientation, initSize, initTextureID)
+
+{
     Direction = initDirection;
 }
 
-void astroid::update(double tDelta) {
+void Asteroid::update(double tDelta) {
 
-    // Set position
-    position = position + (Direction * (float)tDelta);
+    // Moves asteroid
+    position += Direction * (float)tDelta;
 
-    //rotates astroid
-    orientation += RotationSpeed * tDelta;
+    // Rotation based on speed
+    float speed = glm::length(Direction);
+    float rotationFactor = 4.0f; // adjust for desired spin intensity
+    orientation += speed * rotationFactor * tDelta; // rotates asteroid
 
-    // Add Wrap so that Player stays within window
-    if (position.y < -getViewplaneHeight() / 2.0f)
-    {
-        position.y = getViewplaneHeight() / 2.0f;
-    }
+    // Screen wrap
+    float halfH = getViewplaneHeight() / 2.0f; // This can be used for both horizontal and vertical values of the screen optimising the original code significantly
+    if (position.y < -halfH) position.y = halfH;
+    else if (position.y > halfH) position.y = -halfH;
+    if (position.x < -halfH) position.x = halfH;
+    else if (position.x > halfH) position.x = -halfH;
+}
 
-    else if (position.y > getViewplaneHeight() / 2.0f)
-    {
-        position.y = -getViewplaneHeight() / 2.0f;
-    }
 
-    if (position.x < -getViewplaneHeight() / 2.0f)
-    {
-        position.x = getViewplaneHeight() / 2.0f;
-    }
-
-    else if (position.x > getViewplaneHeight() / 2.0f)
-    {
-        position.x = -getViewplaneHeight() / 2.0f;
-    }
-  }
-
-   
