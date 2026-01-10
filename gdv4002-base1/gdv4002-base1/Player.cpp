@@ -43,7 +43,7 @@ void Player::update(double tDelta)
         Bullet* bulletShot = new Bullet(bulletPos, orientation, glm::vec2(0.5f, 0.5f), bulletTexture, bulletVel);
         addObject("Bullet", bulletShot);
     }
-    prevSpace = keys.test(Key::SPACE); // This stops the bullets from being held down and shot automatically from the space key
+    prevSpace = keys.test(Key::SPACE); // This stops the bullets from being held down and shot automatically from the Space Key
 
     // --- (Movement physics) ---
     F = glm::vec2(temp * cos(orientation) * (float)tDelta, temp * sin(orientation) * (float)tDelta);
